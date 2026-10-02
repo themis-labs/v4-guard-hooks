@@ -22,7 +22,7 @@ single-source-of-truth rule — hooks read, the guard decides.
 
 ## Status
 
-Early development. No deployments yet.
+LULDGuardHook is implemented and covered by Foundry tests. No deployments have been made.
 
 ## Disclaimer
 
