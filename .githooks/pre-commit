@@ -1,0 +1,7 @@
+#!/bin/sh
+# Format staged Solidity files with forge fmt and re-stage them.
+files=$(git diff --cached --name-only --diff-filter=ACM | grep '\.sol$' || true)
+[ -z "$files" ] && exit 0
+forge fmt $files
+git add $files
+exit 0

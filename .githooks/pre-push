@@ -1,0 +1,6 @@
+#!/bin/sh
+# Run the full test suite before any push.
+forge test || {
+  echo "forge test failed; push aborted" >&2
+  exit 1
+}
