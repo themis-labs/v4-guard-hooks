@@ -8,3 +8,5 @@ coverage/
 *.log
 *.pem
 *.key
+*.swp
+.*.swp
