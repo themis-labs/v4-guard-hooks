@@ -7,5 +7,8 @@ evm_version = "cancun"
 optimizer = true
 optimizer_runs = 200
 
+[rpc_endpoints]
+base_sepolia = "${BASE_SEPOLIA_RPC}"
+
 # Dependencies (v4-core, uniswap-hooks, forge-std) are pinned by tag or
 # commit; do not float versions.
