@@ -7,5 +7,5 @@ evm_version = "cancun"
 optimizer = true
 optimizer_runs = 200
 
-# Dependencies (v4-core, v4-periphery, forge-std) are pinned by commit;
-# see the dependency notes in the project ledger before bumping anything.
+# Dependencies (v4-core, uniswap-hooks, forge-std) are pinned by tag or
+# commit; do not float versions.
