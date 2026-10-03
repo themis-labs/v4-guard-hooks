@@ -60,9 +60,11 @@ contract DeployLULDGuardHook is Script {
 
         bytes memory creationCode =
             abi.encodePacked(type(LULDGuardHook).creationCode, abi.encode(POOL_MANAGER, guardAddress));
-        bytes32 salt = HookMiner.find(address(this), Hooks.BEFORE_SWAP_FLAG, creationCode);
 
         vm.startBroadcast();
+        // Under broadcast the CREATE2 deployer is the signing account, not
+        // this script contract, so the salt is mined against msg.sender.
+        bytes32 salt = HookMiner.find(msg.sender, Hooks.BEFORE_SWAP_FLAG, creationCode);
         hook = new LULDGuardHook{salt: salt}(IPoolManager(POOL_MANAGER), ITradingGuard(guardAddress));
         vm.stopBroadcast();
 
