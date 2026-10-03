@@ -26,7 +26,8 @@ LULDGuardHook is implemented and covered by Foundry tests, including end-to-end
 verification on a Base Sepolia fork against the live PoolManager and guard.
 
 Live deployment on Base Sepolia (chain id 84532), 2026-10-03: hook
-0x3160E4eec2eaF776E0e3e4Ca0eB5931C350Bc080 bound to guard
+[0x3160E4eec2eaF776E0e3e4Ca0eB5931C350Bc080](https://sepolia.basescan.org/address/0x3160E4eec2eaF776E0e3e4Ca0eB5931C350Bc080)
+(source verified on Basescan) bound to guard
 0xBAcaF3d2765dcc314ee22CB19b87Cf755f5A6433, deploy tx
 [0x83280b21fc583bf403f47de1253e501c840f650f7430962c258c0c0a0e3ccfb8](https://sepolia.basescan.org/tx/0x83280b21fc583bf403f47de1253e501c840f650f7430962c258c0c0a0e3ccfb8),
 salt 0x1313, deployer 0x84E2E8BC8d5F511f60774f2191d1149ca0dd3643.
