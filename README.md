@@ -22,7 +22,9 @@ hooks read, the guard decides.
 
 ## Status
 
-LULDGuardHook is implemented and covered by Foundry tests. No deployments have been made.
+LULDGuardHook is implemented and covered by Foundry tests, including end-to-end
+verification on a Base Sepolia fork against the live PoolManager and guard.
+No deployments have been made.
 
 ## Disclaimer
 
