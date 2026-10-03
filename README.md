@@ -15,10 +15,10 @@ conditions on-chain, with deployments on Base mainnet, Base Sepolia, and
 Arbitrum Sepolia. The hooks work with it out of the box, and with any other
 guard that honors the interface.
 
-The first hook under development is `LULDGuardHook`: a thin `beforeSwap`
-interceptor that reads guard state and holds none of its own. Session-aware
-and per-pool volume variants are being evaluated against the same
-single-source-of-truth rule — hooks read, the guard decides.
+The first hook is `LULDGuardHook`: a thin `beforeSwap` interceptor that reads
+guard state and holds none of its own. Session-aware and per-pool volume
+variants are being evaluated against the same single-source-of-truth rule —
+hooks read, the guard decides.
 
 ## Status
 
