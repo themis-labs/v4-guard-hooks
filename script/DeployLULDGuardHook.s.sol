@@ -17,8 +17,10 @@ import {ITradingGuard} from "../src/interfaces/ITradingGuard.sol";
 /// address carries exactly the wanted bits, then the caller deploys with the
 /// winning salt. It follows the same search idea as the ecosystem's
 /// hook-mining helpers, rewritten here so deployment tooling stays inside
-/// this delivery. Mining and deployment must use the same deployer address;
-/// this script performs both steps in one run, which keeps them consistent.
+/// this delivery. Mining and deployment must use the same deployer address,
+/// which under forge scripts is always the canonical CREATE2 deployer
+/// below: forge routes every salted creation through it, so the salt is
+/// mined against that constant rather than any script or signer address.
 library HookMiner {
     /// @notice No salt produced the wanted address within the search bound.
     error SaltNotFound();
@@ -54,6 +56,11 @@ contract DeployLULDGuardHook is Script {
     /// @dev PoolManager singleton on Base Sepolia (chain id 84532).
     address internal constant POOL_MANAGER = 0x05E73354cFDd6745C338b50BcFDfA3Aa6fA03408;
 
+    /// @dev Canonical CREATE2 deployer present on Base Sepolia and every
+    /// major EVM chain. Forge scripts execute salted deployments through it,
+    /// so it is the deployer input for both mining and address derivation.
+    address internal constant CREATE2_DEPLOYER = 0x4e59b44847b379578588920cA78FbF26c0B4956C;
+
     function run() external returns (LULDGuardHook hook) {
         address guardAddress = vm.envAddress("GUARD_ADDRESS");
         if (guardAddress == address(0)) revert LULDGuardHook.ZeroAddress();
@@ -61,10 +68,12 @@ contract DeployLULDGuardHook is Script {
         bytes memory creationCode =
             abi.encodePacked(type(LULDGuardHook).creationCode, abi.encode(POOL_MANAGER, guardAddress));
 
+        // Mining is pure, so it runs before broadcasting; the mined salt
+        // only matches on-chain derivation because both target the
+        // canonical CREATE2 deployer above.
+        bytes32 salt = HookMiner.find(CREATE2_DEPLOYER, Hooks.BEFORE_SWAP_FLAG, creationCode);
+
         vm.startBroadcast();
-        // Under broadcast the CREATE2 deployer is the signing account, not
-        // this script contract, so the salt is mined against msg.sender.
-        bytes32 salt = HookMiner.find(msg.sender, Hooks.BEFORE_SWAP_FLAG, creationCode);
         hook = new LULDGuardHook{salt: salt}(IPoolManager(POOL_MANAGER), ITradingGuard(guardAddress));
         vm.stopBroadcast();
 
