@@ -49,6 +49,26 @@ Swap#3
 [0x8f4caea6ef7eee16317888e915c7f5866502cde044eed98dc17c0fc8a85c0829](https://sepolia.basescan.org/tx/0x8f4caea6ef7eee16317888e915c7f5866502cde044eed98dc17c0fc8a85c0829)
 (settled).
 
+## Development
+
+Requires [Foundry](https://getfoundry.sh). Dependencies are git submodules
+pinned by tag or commit; clone with `--recursive`.
+
+```sh
+forge build
+forge test
+```
+
+The fork suite under `test/fork/` replays the drill against the live Base
+Sepolia PoolManager and guard, and needs an RPC endpoint: copy
+`.env.example` to `.env` and set `BASE_SEPOLIA_RPC` (the public
+`https://sepolia.base.org` works).
+
+`script/DeployLULDGuardHook.s.sol` mines a salt so the deployed address
+carries exactly the `beforeSwap` permission bit, and deploys via CREATE2.
+`script/SepoliaDemo.s.sol` seeds a demo pool and fires swaps against a
+live deployment.
+
 ## Disclaimer
 
 This project is open-source developer tooling and a reference implementation.
